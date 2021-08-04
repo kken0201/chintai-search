@@ -18,7 +18,7 @@ jobs:
       - name: Install deps
         run: yarn install
       - name: Run
-        run: yarn start
+        run: yarn run crawl
       - name: Count changes
         id: changes
         run: |
