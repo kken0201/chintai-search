@@ -1,0 +1,13 @@
+{
+  "name": "chintai-search",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "kken0201 <kken.com@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.13.1"
+  },
+  "scripts": {
+    "start": "node ./script.js"
+  }
+}
