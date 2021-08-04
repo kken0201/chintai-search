@@ -9,13 +9,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    - name: Install operating system dependencies
-      run: npx playwright install-deps
-    - name: Install deps
-      run: yarn install
-    - name: Run
-      run: yarn start
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install operating system dependencies
+        run: npx playwright install-deps
+      - name: Install deps
+        run: yarn install
+      - name: Run
+        run: yarn start
+      - name: Count changes
+        id: changes
+        run: |
+          git add -N . # 新規ファイルを含める
+          echo "::set-output name=count::$(git diff --name-only | wc -l)"
+      - name: commit & push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Update"
+          git push
+        if: steps.changes.outputs.count > 0
+      - name: 'Send Notification'
+        run: yarn run notify ${{ secrets.SLACK_WEBHOOK }}

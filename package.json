@@ -5,9 +5,11 @@
   "author": "kken0201 <kken.com@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "got": "^11.8.2",
     "playwright": "^1.13.1"
   },
   "scripts": {
-    "start": "node ./script.js"
+    "crawl": "node ./crawl.js",
+    "notify": "node ./notify.js"
   }
 }
