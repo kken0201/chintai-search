@@ -1,6 +1,23 @@
 const { chromium } = require('playwright');
 const fs = require('fs').promises;
 
+
+const unique = (prev, next) => {
+    const prevTitles = prev.map(result => result.title);
+    return next.reduce((acc, current) => {
+        if (!prevTitles.includes(current.title)) {
+            return [...acc, current]
+        }
+        return acc
+    }, [])
+}
+
+const update = async (results) => {
+    const prev = await fs.readFile('results.json');
+    await fs.writeFile('arrival.json', JSON.stringify(unique(JSON.parse(prev), results)));
+    await fs.writeFile('results.json', JSON.stringify(results));
+}
+
 (async () => {
     const browser = await chromium.launch();
     const page = await browser.newPage();
@@ -46,7 +63,7 @@ const fs = require('fs').promises;
             properties: properties.flat(1)
         }
     }))
-    
-    await fs.writeFile('results.json', JSON.stringify(results));
+
+    await update(results);
     await browser.close();
 })();

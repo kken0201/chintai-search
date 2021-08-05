@@ -75,8 +75,19 @@ ${property.floors} ${property.madori} ${property.menseki}
 }
 
 (async () => {
-    const json = await fs.readFile('results.json');
-    const chunks = arrayChunk(JSON.parse(json), 5);
+    const json = await fs.readFile('arrival.json');
+    const results = JSON.parse(json);
+
+    if (results.length === 0) {
+        const { data } = await got.post(SLACK_WEBHOOK, {
+            json: {
+                text: '今日の新着物件はありません',
+            }
+        });
+        return
+    }
+
+    const chunks = arrayChunk(results, 5);
 
     await Promise.all(chunks.map(async (chunk, index) => {
         const blocks = slackify(chunk)
