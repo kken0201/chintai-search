@@ -1,0 +1,9 @@
+credentials
+node_modules
+.DS_Store
+build
+
+yarn-error.log
+
+/lp
+!lp/404.html
