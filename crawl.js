@@ -5,7 +5,7 @@ const fs = require('fs').promises;
     const browser = await chromium.launch();
     const page = await browser.newPage();
     // 武蔵小杉駅、元住吉駅、日吉駅の賃貸・部屋探し情報　検索結果
-    await page.goto('https://suumo.jp/jj/chintai/ichiran/FR301FC001/?url=%2Fchintai%2Fichiran%2FFR301FC001%2F&ar=030&bs=040&pc=20&smk=&po1=09&po2=99&shkr1=03&shkr2=03&shkr3=03&shkr4=03&cb=0.0&ct=15.0&et=10&mb=40&mt=9999999&cn=15&ra=014&ek=022038720&ek=022039270&ek=022033150&rn=0220&ae=02201');
+    await page.goto('https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ra=014&rn=0220&ek=022038720&ek=022039270&ek=022033150&ae=02201&cb=0.0&ct=15.0&mb=40&mt=9999999&et=10&cn=15&shkr1=03&shkr2=03&shkr3=03&shkr4=03&sngz=&po1=09&pc=10');
     const properties = await page.$$('.cassetteitem')
     const results = await Promise.all(properties.map(async (property) => {
         const title = await property.$eval('.cassetteitem_content-title', node => node.innerText)
