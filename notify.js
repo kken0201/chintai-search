@@ -89,9 +89,10 @@ ${property.floors} ${property.madori} ${property.menseki}
 
     const chunks = arrayChunk(results, 5);
 
-    await Promise.all(chunks.map(async (chunk, index) => {
+    for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i]
         const blocks = slackify(chunk)
-        if (index === 0) {
+        if (i === 0) {
             blocks.unshift({
                 "type": "header",
                 "text": {
@@ -101,7 +102,7 @@ ${property.floors} ${property.madori} ${property.menseki}
                 }
             })
         }
-        if (index === chunks.length - 1) {
+        if (i === chunks.length - 1) {
             blocks.push({
                 "type": "header",
                 "text": {
@@ -113,9 +114,9 @@ ${property.floors} ${property.madori} ${property.menseki}
         }
         const { data } = await got.post(SLACK_WEBHOOK, {
             json: {
-                text: index === 0 ? '@me' : '',
+                text: i === 0 ? '@me' : '',
                 blocks
             }
         });
-    }))
+    }
 })()
