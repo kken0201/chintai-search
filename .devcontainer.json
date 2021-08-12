@@ -1,0 +1,4 @@
+{
+    "image": "mcr.microsoft.com/playwright:next",
+    "postCreateCommand": "yarn install && npx playwright install"
+}
